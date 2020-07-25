@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-java-bot-example
+  labels:
+    app: telegram-java-bot-example
+spec:
+  selector:
+    matchLabels:
+      app: telegram-java-bot-example
+  template:
+    metadata:
+      labels:
+        app: telegram-java-bot-example
+    spec:
+      containers:
+      - name: telegram-java-bot-example
+        image: telegram-java-bot-example:latest
+        imagePullPolicy: Never
+        env:
+          - name: TELEGRAM_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: telegram-java-bot-example
+                key: telegram_token
+          - name: TELEGRAM_CHATIDS
+            valueFrom:
+              secretKeyRef:
+                name: telegram-java-bot-example
+                key: telegram_chatids
