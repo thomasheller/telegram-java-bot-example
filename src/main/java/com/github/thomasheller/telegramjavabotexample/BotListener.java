@@ -19,9 +19,11 @@ public class BotListener implements UpdatesListener {
 	protected static final String STICKER_FILE_ID = "CAACAgEAAxkBAAILxV8QFqe_J-jRoWeJc_VVQrlZZh3qAALpAAM4DoIRsb2LbanQ7PIaBA";
 
 	protected final TelegramBot bot;
+	protected final List<Long> allowedChatIds;
 
-	public BotListener(TelegramBot bot) {
+	public BotListener(TelegramBot bot, List<Long> allowedChatIds) {
 		this.bot = bot;
+		this.allowedChatIds = allowedChatIds;
 	}
 
 	@Override
@@ -40,8 +42,8 @@ public class BotListener implements UpdatesListener {
 
 		System.out.printf("Update contains message from chat ID %d\n", fromId);
 
-		if(!Config.allowedChatIds.contains(fromId)) {
-			// Discard updates from unknown chat IDs
+		if(!this.allowedChatIds.contains(fromId)) {
+			// Discard updates from unknown chat Ids
 			return;
 		}
 
